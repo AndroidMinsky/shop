@@ -34,7 +34,7 @@ export default function Header(props) {
                       className="flex-shrink-0 h-7 w-7 text-black group-hover:text-gray-300"
                       aria-hidden="true"
                     />
-                    <span class="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xl font-bold leading-none text-white bg-pink-dark rounded">
+                    <span className="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xl font-bold leading-none text-white bg-pink-dark rounded">
                       {props.totalItems}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
@@ -46,10 +46,10 @@ export default function Header(props) {
           <header className="pb-6 pt-2">
             {location.pathname === "/" ? (
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <button class="bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2">
+                <button className="bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2">
                   All Products
                 </button>
-                <button class="bg-light hover:bg-pink-dark text-white font-bold py-2 px-4 rounded text-xl mr-2">
+                <button className="bg-light hover:bg-pink-dark text-white font-bold py-2 px-4 rounded text-xl mr-2">
                   Skincare
                 </button>
               </div>
@@ -57,7 +57,7 @@ export default function Header(props) {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Link
                   to="/"
-                  class="bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2"
+                  className="bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2"
                 >
                   &larr; Continue Shopping
                 </Link>

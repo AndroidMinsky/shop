@@ -2,9 +2,15 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  mode: "jit",
+  purge: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
+    "./src/components/*.{js,jsx}",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    // cursor: { text: "text", pointer: "pointer" },
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],

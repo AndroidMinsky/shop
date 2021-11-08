@@ -212,7 +212,7 @@ export default function Cart({
                           <button
                             disabled={!cart.line_items.length}
                             type="submit"
-                            className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50"
+                            className="w-full bg-dark border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50"
                             onClick={() => setOpen(false)}
                           >
                             Checkout

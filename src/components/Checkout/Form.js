@@ -16,23 +16,20 @@ export default function Form() {
           </h2>
 
           <div className="mt-6">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
+            <div class="relative">
               <input
-                type="email"
-                name="email"
                 id="email"
-                className="block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md"
-                placeholder="you@example.com"
-                defaultValue=""
-                aria-invalid="true"
-                aria-describedby="email-error"
+                name="email"
+                type="email"
+                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none"
+                placeholder="."
               />
+              <label
+                htmlFor="email"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+              >
+                Email address
+              </label>
               {/* <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <ExclamationCircleIcon
                   className="h-5 w-5 text-red-500"
@@ -46,89 +43,6 @@ export default function Form() {
           </div>
         </section>
 
-        <section aria-labelledby="payment-heading" className="mt-10">
-          <h2
-            id="payment-heading"
-            className="text-lg font-medium text-gray-900"
-          >
-            Payment details
-          </h2>
-
-          <div className="mt-6 grid grid-cols-3 sm:grid-cols-4 gap-y-6 gap-x-4">
-            <div className="col-span-3 sm:col-span-4">
-              <label
-                htmlFor="name-on-card"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name on card
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="name-on-card"
-                  name="name-on-card"
-                  autoComplete="cc-name"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="col-span-3 sm:col-span-4">
-              <label
-                htmlFor="card-number"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Card number
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="card-number"
-                  name="card-number"
-                  autoComplete="cc-number"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="col-span-2 sm:col-span-3">
-              <label
-                htmlFor="expiration-date"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Expiration date (MM/YY)
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  name="expiration-date"
-                  id="expiration-date"
-                  autoComplete="cc-exp"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="cvc"
-                className="block text-sm font-medium text-gray-700"
-              >
-                CVC
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  name="cvc"
-                  id="cvc"
-                  autoComplete="csc"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section aria-labelledby="shipping-heading" className="mt-10">
           <h2
             id="shipping-heading"
@@ -138,149 +52,176 @@ export default function Form() {
           </h2>
 
           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">
-            <div className="sm:col-span-3">
+            <div className="sm:col-span-3 relative">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-none"
+                placeholder="."
+              />
               <label
-                htmlFor="company"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor="name"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
               >
-                Company
+                Full Name
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
             </div>
 
-            <div className="sm:col-span-3">
+            <div className="sm:col-span-3 relative">
+              <input
+                id="address"
+                name="address"
+                type="text"
+                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                placeholder="."
+              />
               <label
-                htmlFor="address"
-                className="block text-sm font-medium text-gray-700"
+                for="address"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
               >
                 Address
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  autoComplete="street-address"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="apartment"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Apartment, suite, etc.
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="apartment"
-                  name="apartment"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
+            <div className="sm:col-span-3 relative">
+              <input
+                id="city"
+                name="city"
+                type="text"
+                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                placeholder="."
+              />
               <label
                 htmlFor="city"
-                className="block text-sm font-medium text-gray-700"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
               >
                 City
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
             </div>
 
-            <div>
+            <div className="relative">
+              <input
+                id="country"
+                name="country"
+                type="text"
+                className="pointer-events-none peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                placeholder="."
+                value="Ireland"
+              />
               <label
-                htmlFor="province"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor="country"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
               >
-                Province
+                Country
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="province"
-                  name="province"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
             </div>
 
-            <div>
+            <div className="relative">
+              <input
+                id="county"
+                name="county"
+                type="text"
+                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                placeholder="."
+              />
               <label
-                htmlFor="postal-code"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor="county"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
               >
-                Postal code
+                County
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  id="postal-code"
-                  name="postal-code"
-                  autoComplete="postal-code"
-                  className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+            </div>
+
+            <div className="relative">
+              <input
+                id="postal"
+                name="postal"
+                type="text"
+                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                placeholder="."
+              />
+              <label
+                htmlFor="postal"
+                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+              >
+                Postal Code
+              </label>
             </div>
           </div>
         </section>
 
-        <section aria-labelledby="billing-heading" className="mt-10">
+        <section aria-labelledby="payment-heading" className="mt-10">
           <h2
-            id="billing-heading"
+            id="payment-heading"
             className="text-lg font-medium text-gray-900"
           >
-            Billing information
+            Payment details
           </h2>
 
-          <div className="mt-6 flex items-center">
-            <input
-              id="same-as-shipping"
-              name="same-as-shipping"
-              type="checkbox"
-              defaultChecked
-              className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-            />
-            <div className="ml-2">
-              <label
-                htmlFor="same-as-shipping"
-                className="text-sm font-medium text-gray-900"
-              >
-                Same as shipping information
-              </label>
+          <div className="mt-6">
+            <div className="flex -space-x-px">
+              <div class="relative w-5/6 flex-1 -space-x-px">
+                <input
+                  id="card"
+                  name="card"
+                  type="text"
+                  className="peer h-10 w-full rounded-l-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none "
+                  placeholder="."
+                />
+                <label
+                  htmlFor="card"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  Card Number
+                </label>
+              </div>
+
+              <div class="relative w-1/6 inline-block -space-x-px">
+                <input
+                  id="expiry"
+                  name="expiry"
+                  type="text"
+                  className="peer h-10 w-full border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none"
+                  placeholder="."
+                />
+                <label
+                  htmlFor="expiry"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  MM / YY
+                </label>
+              </div>
+
+              <div class="relative w-1/6 inline-block text-xl">
+                <input
+                  id="cvc"
+                  name="cvc"
+                  type="text"
+                  className="peer h-10 w-full rounded-r-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none"
+                  placeholder="."
+                />
+                <label
+                  htmlFor="cvc"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  CVC
+                </label>
+              </div>
             </div>
           </div>
         </section>
 
-        <div className="mt-10 pt-6 border-t border-gray-200 sm:flex sm:items-center sm:justify-between">
+        <div className="mt-10 pt-6 border-t border-gray-200">
           <button
             type="submit"
-            className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:ml-6 sm:order-last sm:w-auto"
+            className="w-full bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2"
           >
-            Continue
+            Submit Order
           </button>
-          <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
+          {/* <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
             You won't be charged until the next step.
-          </p>
+          </p> */}
         </div>
       </div>
     </form>
