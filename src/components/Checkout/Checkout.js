@@ -56,10 +56,7 @@ export default function Checkout() {
                       Order summary
                     </h2>
 
-                    <ul
-                      role="list"
-                      className="text-sm font-medium text-gray-900 divide-y divide-gray-200"
-                    >
+                    <ul className="text-sm font-medium text-gray-900 divide-y divide-gray-200">
                       {products.map((product) => (
                         <li
                           key={product.id}

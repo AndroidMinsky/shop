@@ -24,10 +24,7 @@ export default function Cart({
 
   const EmptyCart = () => <h1>Cart is empty!</h1>;
   const FilledCart = () => (
-    <ul
-      role="list"
-      className="border-t border-b border-gray-200 divide-y divide-gray-200"
-    >
+    <ul className="border-t border-b border-gray-200 divide-y divide-gray-200">
       {cart.line_items.map((item) => (
         <li key={item.id} className="flex py-6">
           <div className="flex-shrink-0">

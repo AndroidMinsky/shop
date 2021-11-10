@@ -1,11 +1,20 @@
 import React from "react";
-import { useForm, formProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 export default function Form() {
-  const methods = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   return (
-    <form className="lg:row-start-1 lg:col-start-1">
+    <form
+      className="lg:row-start-1 lg:col-start-1"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="max-w-lg mx-auto lg:max-w-none">
         <section aria-labelledby="contact-info-heading">
           <h2
@@ -16,12 +25,15 @@ export default function Form() {
           </h2>
 
           <div className="mt-6">
-            <div class="relative">
+            <div className="relative">
               <input
+                {...register("email", { required: true })}
                 id="email"
                 name="email"
                 type="email"
-                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none"
+                className={`peer h-10 w-full rounded-md ${
+                  errors.email ? "border-red-300" : "border-gray-300"
+                } shadow-sm text-gray-900 placeholder-transparent focus:outline-none`}
                 placeholder="."
               />
               <label
@@ -30,16 +42,20 @@ export default function Form() {
               >
                 Email address
               </label>
-              {/* <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <ExclamationCircleIcon
-                  className="h-5 w-5 text-red-500"
-                  aria-hidden="true"
-                />
-              </div> */}
+              {errors.email && (
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <ExclamationCircleIcon
+                    className="h-5 w-5 text-red-500"
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
             </div>
-            {/* <p className="mt-2 text-sm text-red-600" id="email-error">
-              Your password must be less than 4 characters.
-            </p> */}
+            {errors.email && (
+              <p className="mt-2 text-sm text-red-600" id="email-error">
+                Email address is required
+              </p>
+            )}
           </div>
         </section>
 
@@ -52,101 +68,208 @@ export default function Form() {
           </h2>
 
           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">
-            <div className="sm:col-span-3 relative">
-              <input
-                id="name"
-                name="name"
-                type="text"
-                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-none"
-                placeholder="."
-              />
-              <label
-                htmlFor="name"
-                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-              >
-                Full Name
-              </label>
+            <div className="sm:col-span-3">
+              <div className="relative">
+                <input
+                  {...register("name", { required: true })}
+                  id="name"
+                  name="name"
+                  type="text"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.name ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-none`}
+                  placeholder="."
+                />
+                <label
+                  htmlFor="name"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  Full Name
+                </label>
+                {errors.name && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.name && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  Full Name is required
+                </p>
+              )}
             </div>
 
-            <div className="sm:col-span-3 relative">
-              <input
-                id="address"
-                name="address"
-                type="text"
-                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
-                placeholder="."
-              />
-              <label
-                for="address"
-                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-              >
-                Address
-              </label>
+            <div className="sm:col-span-3">
+              <div className="relative">
+                <input
+                  {...register("address", { required: true })}
+                  id="address"
+                  name="address"
+                  type="text"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.address ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
+                  placeholder="."
+                />
+                <label
+                  htmlFor="address"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  Address
+                </label>
+                {errors.address && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.address && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  Address is required
+                </p>
+              )}
             </div>
 
-            <div className="sm:col-span-3 relative">
-              <input
-                id="city"
-                name="city"
-                type="text"
-                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
-                placeholder="."
-              />
-              <label
-                htmlFor="city"
-                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-              >
-                City
-              </label>
+            <div className="sm:col-span-3">
+              <div className="relative">
+                <input
+                  {...register("city", { required: true })}
+                  id="city"
+                  name="city"
+                  type="text"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.city ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
+                  placeholder="."
+                />
+                <label
+                  htmlFor="city"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  City
+                </label>
+                {errors.city && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.city && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  City is required
+                </p>
+              )}
             </div>
 
             <div className="relative">
-              <input
-                id="country"
-                name="country"
-                type="text"
-                className="pointer-events-none peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
-                placeholder="."
-                value="Ireland"
-              />
-              <label
-                htmlFor="country"
-                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-              >
-                Country
-              </label>
+              <div>
+                <input
+                  {...register("country", { required: true })}
+                  id="country"
+                  name="country"
+                  type="text"
+                  className="pointer-events-none peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                  placeholder="."
+                  readOnly
+                  value="Ireland"
+                />
+                <label
+                  htmlFor="country"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  Country
+                </label>
+                {errors.country && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.country && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  Country is required
+                </p>
+              )}
             </div>
 
-            <div className="relative">
-              <input
-                id="county"
-                name="county"
-                type="text"
-                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
-                placeholder="."
-              />
-              <label
-                htmlFor="county"
-                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-              >
-                County
-              </label>
+            <div>
+              <div className="relative">
+                <input
+                  {...register("county", { required: true })}
+                  id="county"
+                  name="county"
+                  type="text"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.county ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
+                  placeholder="."
+                />
+                <label
+                  htmlFor="county"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  County
+                </label>
+                {errors.county && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.county && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  County is required
+                </p>
+              )}
             </div>
 
-            <div className="relative">
-              <input
-                id="postal"
-                name="postal"
-                type="text"
-                className="peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
-                placeholder="."
-              />
-              <label
-                htmlFor="postal"
-                className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-              >
-                Postal Code
-              </label>
+            <div>
+              <div className="relative">
+                <input
+                  {...register("postal", { required: true })}
+                  id="postal"
+                  name="postal"
+                  type="text"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.county ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
+                  placeholder="."
+                />
+                <label
+                  htmlFor="postal"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                >
+                  Postal Code
+                </label>
+                {errors.county && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.postal && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  Postal Code is required
+                </p>
+              )}
             </div>
           </div>
         </section>
@@ -161,7 +284,7 @@ export default function Form() {
 
           <div className="mt-6">
             <div className="flex -space-x-px">
-              <div class="relative w-5/6 flex-1 -space-x-px">
+              <div className="relative w-5/6 flex-1 -space-x-px">
                 <input
                   id="card"
                   name="card"
@@ -177,7 +300,7 @@ export default function Form() {
                 </label>
               </div>
 
-              <div class="relative w-1/6 inline-block -space-x-px">
+              <div className="relative w-1/6 inline-block -space-x-px">
                 <input
                   id="expiry"
                   name="expiry"
@@ -193,7 +316,7 @@ export default function Form() {
                 </label>
               </div>
 
-              <div class="relative w-1/6 inline-block text-xl">
+              <div className="relative w-1/6 inline-block text-xl">
                 <input
                   id="cvc"
                   name="cvc"
