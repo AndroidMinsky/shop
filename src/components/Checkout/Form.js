@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { commerce } from "../../lib/commerce";
 
-export default function Form() {
+export default function Form({ checkoutToken }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => console.log(data);
+
+  const [shippingCountries, setShippingCountries] = useState([]);
+
+  const fetchShippingCountires = async (checkoutTokenId) => {
+    const { countries } = await commerce.services.localeListShippingCountries(
+      checkoutTokenId
+    );
+    console.log(countries);
+    setShippingCountries(countries);
+  };
+
+  useEffect(() => {
+    fetchShippingCountires(checkoutToken.id);
+  }, []);
 
   return (
     <form
@@ -206,7 +221,7 @@ export default function Form() {
 
             <div>
               <div className="relative">
-                <input
+                <select
                   {...register("county", { required: true })}
                   id="county"
                   name="county"
@@ -215,7 +230,12 @@ export default function Form() {
                     errors.county ? "border-red-300" : "border-gray-300"
                   } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
-                />
+                  defaultValue="Canada"
+                >
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Mexico</option>
+                </select>
                 <label
                   htmlFor="county"
                   className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"

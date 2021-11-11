@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
+import { commerce } from "../../lib/commerce";
 import Form from "./Form";
 
 const products = [
@@ -19,7 +20,23 @@ const products = [
   // More products...
 ];
 
-export default function Checkout() {
+export default function Checkout({ cart }) {
+  const [checkoutToken, setCheckoutToken] = useState(null);
+
+  useEffect(() => {
+    const generateToken = async () => {
+      try {
+        const token = await commerce.checkout.generateToken(cart.id, {
+          type: "cart",
+        });
+        setCheckoutToken(token);
+      } catch (error) {}
+    };
+    generateToken();
+  }, [cart]);
+
+  console.log(cart, checkoutToken);
+
   return (
     <main className="-mt-32 pb-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -34,7 +51,7 @@ export default function Checkout() {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  <Form />
+                  {checkoutToken && <Form checkoutToken={checkoutToken} />}
                 </div>
               </div>
             </section>
