@@ -35,7 +35,7 @@ export default function Form({ checkoutToken }) {
 
   useEffect(() => {
     fetchShippingCountires(checkoutToken.id);
-  });
+  }, [checkoutToken.id]);
 
   useEffect(() => {
     if (shippingCountry) fetchSubdivisions(shippingCountry);
@@ -216,7 +216,7 @@ export default function Form({ checkoutToken }) {
                 <select
                   {...register("country", {
                     required: true,
-                    value: { shippingCountry },
+                    value: shippingCountry,
                   })}
                   id="country"
                   name="country"
@@ -225,7 +225,6 @@ export default function Form({ checkoutToken }) {
                     errors.county ? "border-red-300" : "border-gray-300"
                   } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
-                  // defaultValue={shippingCountry}
                   onChange={(e) => setShippingCountry(e.target.value)}
                 >
                   {countries.map((country) => (
@@ -261,7 +260,7 @@ export default function Form({ checkoutToken }) {
                 <select
                   {...register("county", {
                     required: true,
-                    value: { shippingSubdivision },
+                    value: shippingSubdivision,
                   })}
                   id="county"
                   name="county"
@@ -270,7 +269,6 @@ export default function Form({ checkoutToken }) {
                     errors.county ? "border-red-300" : "border-gray-300"
                   } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
-                  // defaultValue={shippingSubdivision}
                   onChange={(e) => setShippingSubdivision(e.target.value)}
                 >
                   {counties.map((county) => (

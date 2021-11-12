@@ -35,8 +35,6 @@ export default function Checkout({ cart }) {
     generateToken();
   }, [cart]);
 
-  console.log(cart, checkoutToken);
-
   return (
     <main className="-mt-32 pb-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
