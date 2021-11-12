@@ -9,21 +9,47 @@ export default function Form({ checkoutToken }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => console.log(data);
 
   const [shippingCountries, setShippingCountries] = useState([]);
+  const [shippingCountry, setShippingCountry] = useState("");
+  const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
+  const [shippingSubdivision, setShippingSubdivision] = useState("");
 
   const fetchShippingCountires = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(
       checkoutTokenId
     );
-    console.log(countries);
     setShippingCountries(countries);
+    setShippingCountry(Object.keys(countries)[0]);
+  };
+
+  const fetchSubdivisions = async (countryCode) => {
+    const { subdivisions } = await commerce.services.localeListSubdivisions(
+      countryCode
+    );
+    setShippingSubdivisions(subdivisions);
+    setShippingSubdivision(Object.keys(subdivisions)[0]);
   };
 
   useEffect(() => {
     fetchShippingCountires(checkoutToken.id);
-  }, []);
+  });
+
+  useEffect(() => {
+    if (shippingCountry) fetchSubdivisions(shippingCountry);
+  }, [shippingCountry]);
+
+  const countries = Object.entries(shippingCountries).map(([code, name]) => ({
+    id: code,
+    label: name,
+  }));
+
+  const counties = Object.entries(shippingSubdivisions).map(([code, name]) => ({
+    id: code,
+    label: name,
+  }));
 
   return (
     <form
@@ -185,18 +211,29 @@ export default function Form({ checkoutToken }) {
               )}
             </div>
 
-            <div className="relative">
-              <div>
-                <input
-                  {...register("country", { required: true })}
+            <div>
+              <div className="relative">
+                <select
+                  {...register("country", {
+                    required: true,
+                    value: { shippingCountry },
+                  })}
                   id="country"
                   name="country"
                   type="text"
-                  className="pointer-events-none peer h-10 w-full rounded-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.county ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
-                  readOnly
-                  value="Ireland"
-                />
+                  // defaultValue={shippingCountry}
+                  onChange={(e) => setShippingCountry(e.target.value)}
+                >
+                  {countries.map((country) => (
+                    <option key={country.id} value={country.id}>
+                      {country.label}
+                    </option>
+                  ))}
+                </select>
                 <label
                   htmlFor="country"
                   className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
@@ -222,7 +259,10 @@ export default function Form({ checkoutToken }) {
             <div>
               <div className="relative">
                 <select
-                  {...register("county", { required: true })}
+                  {...register("county", {
+                    required: true,
+                    value: { shippingSubdivision },
+                  })}
                   id="county"
                   name="county"
                   type="text"
@@ -230,11 +270,14 @@ export default function Form({ checkoutToken }) {
                     errors.county ? "border-red-300" : "border-gray-300"
                   } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
-                  defaultValue="Canada"
+                  // defaultValue={shippingSubdivision}
+                  onChange={(e) => setShippingSubdivision(e.target.value)}
                 >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
+                  {counties.map((county) => (
+                    <option key={county.id} value={county.id}>
+                      {county.label}
+                    </option>
+                  ))}
                 </select>
                 <label
                   htmlFor="county"
