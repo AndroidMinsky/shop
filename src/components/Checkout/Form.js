@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import {
+  Elements,
+  CardElement,
+  ElementsConsumer,
+} from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { commerce } from "../../lib/commerce";
 
 export default function Form({ checkoutToken }) {
@@ -307,7 +313,7 @@ export default function Form({ checkoutToken }) {
                   name="postal"
                   type="text"
                   className={`peer h-10 w-full rounded-md ${
-                    errors.county ? "border-red-300" : "border-gray-300"
+                    errors.postal ? "border-red-300" : "border-gray-300"
                   } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
                 />
@@ -317,7 +323,7 @@ export default function Form({ checkoutToken }) {
                 >
                   Postal Code
                 </label>
-                {errors.county && (
+                {errors.postal && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <ExclamationCircleIcon
                       className="h-5 w-5 text-red-500"
