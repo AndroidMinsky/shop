@@ -9,6 +9,8 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { commerce } from "../../lib/commerce";
 
+const stripePromise = loadStripe("...");
+
 export default function Form({ checkoutToken }) {
   const {
     register,

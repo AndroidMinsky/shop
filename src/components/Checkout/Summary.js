@@ -3,7 +3,6 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 
 export default function Summary({ checkoutToken }) {
-  console.log(checkoutToken.live);
   return (
     <div className="max-w-lg mx-auto lg:max-w-none">
       <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
