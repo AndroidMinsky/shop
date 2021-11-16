@@ -1,29 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
-import {
-  Elements,
-  CardElement,
-  ElementsConsumer,
-} from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { commerce } from "../../lib/commerce";
 
-const stripePromise = loadStripe("...");
-
-export default function Form({ checkoutToken }) {
+export default function Form({ checkoutToken, onCaptureCheckout }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const onSubmit = async (data) => {
+    // console.log(data);
+    if (!stripe || !elements) return;
+    const cardElement = elements.getElement(CardElement);
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
+    if (error) {
+      console.log(error);
+    } else {
+      const orderData = {
+        line_items: checkoutToken.live.line_items,
+        customer: { email: data.email },
+        shipping: {
+          name: data.name,
+          street: data.address,
+          town_city: data.city,
+          county_state: data.county,
+          postal_zip_code: data.postal,
+          country: data.country,
+        },
+        fulfillment: { shipping_method: data.shipping },
+        payment: {
+          gateway: "stripe",
+          stripe: {
+            payment_method_id: paymentMethod.id,
+          },
+        },
+      };
+      onCaptureCheckout(checkoutToken.id, orderData);
+    }
+  };
 
   const [shippingCountries, setShippingCountries] = useState([]);
   const [shippingCountry, setShippingCountry] = useState("");
   const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
   const [shippingSubdivision, setShippingSubdivision] = useState("");
+  const [shippingOptions, setShippingOptions] = useState([]);
+  const [shippingOption, setShippingOption] = useState("");
 
   const fetchShippingCountires = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(
@@ -41,6 +71,31 @@ export default function Form({ checkoutToken }) {
     setShippingSubdivision(Object.keys(subdivisions)[0]);
   };
 
+  const fetchShippingOptions = async (
+    checkoutTokenId,
+    country,
+    region = null
+  ) => {
+    const options = await commerce.checkout.getShippingOptions(
+      checkoutTokenId,
+      { country, region }
+    );
+    setShippingOptions(options);
+    setShippingOption(options[0].id);
+  };
+
+  const checkShippingOption = async (checkoutTokenId, shippingOption) => {
+    const response = await commerce.checkout.checkShippingOption(
+      checkoutTokenId,
+      {
+        shipping_option_id: shippingOption,
+        country: shippingCountry,
+        region: shippingSubdivision,
+      }
+    );
+    console.log(response);
+  };
+
   useEffect(() => {
     fetchShippingCountires(checkoutToken.id);
   }, [checkoutToken.id]);
@@ -48,6 +103,19 @@ export default function Form({ checkoutToken }) {
   useEffect(() => {
     if (shippingCountry) fetchSubdivisions(shippingCountry);
   }, [shippingCountry]);
+
+  useEffect(() => {
+    if (shippingSubdivision)
+      fetchShippingOptions(
+        checkoutToken.id,
+        shippingCountry,
+        shippingSubdivision
+      );
+  }, [shippingSubdivision]);
+
+  useEffect(() => {
+    if (shippingOption) checkShippingOption(checkoutToken.id, shippingOption);
+  }, [shippingOption]);
 
   const countries = Object.entries(shippingCountries).map(([code, name]) => ({
     id: code,
@@ -348,10 +416,66 @@ export default function Form({ checkoutToken }) {
             id="payment-heading"
             className="text-lg font-medium text-gray-900"
           >
+            Shipping Method
+          </h2>
+          <div className="mt-6">
+            <div>
+              <div className="relative">
+                <select
+                  {...register("shipping", {
+                    required: true,
+                    value: shippingOption,
+                  })}
+                  id="shipping"
+                  name="shipping"
+                  type="text"
+                  className={`peer h-10 w-full rounded-md ${
+                    errors.county ? "border-red-300" : "border-gray-300"
+                  } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
+                  placeholder="."
+                  onChange={(e) => setShippingOption(e.target.value)}
+                >
+                  {shippingOptions.map((option) => (
+                    <option key={option.id} value={option.description}>
+                      {option.description} -{" "}
+                      {option.price.formatted_with_symbol}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  htmlFor="shipping"
+                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
+                ></label>
+                {errors.shipping && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon
+                      className="h-5 w-5 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
+              </div>
+              {errors.shipping && (
+                <p className="mt-2 text-sm text-red-600" id="shipping-error">
+                  Shipping method is required
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="payment-heading" className="mt-10">
+          <h2
+            id="payment-heading"
+            className="text-lg font-medium text-gray-900"
+          >
             Payment details
           </h2>
-
           <div className="mt-6">
+            <CardElement />
+          </div>
+
+          {/* <div className="mt-6">
             <div className="flex -space-x-px">
               <div className="relative w-5/6 flex-1 -space-x-px">
                 <input
@@ -401,7 +525,7 @@ export default function Form({ checkoutToken }) {
                 </label>
               </div>
             </div>
-          </div>
+          </div> */}
         </section>
 
         <div className="mt-10 pt-6 border-t border-gray-200">
@@ -411,9 +535,6 @@ export default function Form({ checkoutToken }) {
           >
             Submit Order
           </button>
-          {/* <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
-            You won't be charged until the next step.
-          </p> */}
         </div>
       </div>
     </form>

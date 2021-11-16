@@ -3,7 +3,7 @@ import { commerce } from "../../lib/commerce";
 import Form from "./Form";
 import Summary from "./Summary";
 
-export default function Checkout({ cart }) {
+export default function Checkout({ cart, order, error, onCaptureCheckout }) {
   const [checkoutToken, setCheckoutToken] = useState(null);
 
   useEffect(() => {
@@ -32,7 +32,12 @@ export default function Checkout({ cart }) {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  {checkoutToken && <Form checkoutToken={checkoutToken} />}
+                  {checkoutToken && (
+                    <Form
+                      checkoutToken={checkoutToken}
+                      onCaptureCheckout={onCaptureCheckout}
+                    />
+                  )}
                 </div>
               </div>
             </section>
