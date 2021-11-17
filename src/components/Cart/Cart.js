@@ -29,7 +29,7 @@ export default function Cart({
         <li key={item.id} className="flex py-6">
           <div className="flex-shrink-0">
             <img
-              src={item.media.source}
+              src={item.image.url}
               alt={item.name}
               className="w-24 h-24 rounded-md object-center object-cover sm:w-32 sm:h-32"
             />
@@ -116,7 +116,7 @@ export default function Cart({
   );
 
   if (!cart.line_items) {
-    return <h2>Loading...</h2>;
+    return <></>;
   }
 
   return (

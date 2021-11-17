@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { commerce } from "../../lib/commerce";
+import Confirmation from "./Confirmation";
 import Form from "./Form";
 import Summary from "./Summary";
 
 export default function Checkout({ cart, order, error, onCaptureCheckout }) {
   const [checkoutToken, setCheckoutToken] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [summaryData, setSummaryData] = useState(null);
 
   useEffect(() => {
     const generateToken = async () => {
@@ -17,6 +20,21 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
     };
     generateToken();
   }, [cart]);
+
+  const summaryDataHandler = (data) => {
+    setSummaryData(data);
+  };
+
+  const successfulCheckoutHandler = () => {
+    setShowConfirmation(true);
+  };
+
+  const loading = (
+    <div>
+      <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>
+      Loading...
+    </div>
+  );
 
   return (
     <main className="-mt-32 pb-8">
@@ -32,12 +50,17 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  {checkoutToken && (
+                  {checkoutToken && !showConfirmation ? (
                     <Form
                       checkoutToken={checkoutToken}
                       onCaptureCheckout={onCaptureCheckout}
+                      onSuccessfulCheckout={successfulCheckoutHandler}
+                      onSummaryDataChange={summaryDataHandler}
                     />
+                  ) : (
+                    loading
                   )}
+                  {showConfirmation && <Confirmation />}
                 </div>
               </div>
             </section>
@@ -51,7 +74,7 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  {checkoutToken && <Summary checkoutToken={checkoutToken} />}
+                  {summaryData && <Summary summaryData={summaryData} />}
                 </div>
               </div>
             </section>

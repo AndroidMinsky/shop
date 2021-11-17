@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 
-export default function Summary({ checkoutToken }) {
+export default function Summary({ summaryData }) {
   return (
     <div className="max-w-lg mx-auto lg:max-w-none">
       <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
@@ -10,7 +10,7 @@ export default function Summary({ checkoutToken }) {
       </h2>
 
       <ul className="text-sm font-medium text-gray-900 divide-y divide-gray-200">
-        {checkoutToken.live.line_items.map((item) => (
+        {summaryData.live.line_items.map((item) => (
           <li key={item.id} className="flex items-start py-6 space-x-4">
             <img
               src={item.image.url}
@@ -43,12 +43,12 @@ export default function Summary({ checkoutToken }) {
       <dl className="hidden text-sm font-medium text-gray-900 space-y-6 border-t border-gray-200 pt-6 lg:block">
         <div className="flex items-center justify-between">
           <dt className="text-gray-600">Subtotal</dt>
-          <dd>{checkoutToken.live.subtotal.formatted_with_symbol}</dd>
+          <dd>{summaryData.live.subtotal.formatted_with_symbol}</dd>
         </div>
 
         <div className="flex items-center justify-between">
           <dt className="text-gray-600">Shipping</dt>
-          <dd>{checkoutToken.live.shipping.price.formatted_with_symbol}</dd>
+          <dd>{summaryData.live.shipping.price.formatted_with_symbol}</dd>
         </div>
 
         {/* <div className="flex items-center justify-between">
@@ -59,7 +59,7 @@ export default function Summary({ checkoutToken }) {
         <div className="flex items-center justify-between border-t border-gray-200 pt-6">
           <dt className="text-base">Total</dt>
           <dd className="text-base">
-            {checkoutToken.live.total_due.formatted_with_symbol}
+            {summaryData.live.total_due.formatted_with_symbol}
           </dd>
         </div>
       </dl>
@@ -70,7 +70,7 @@ export default function Summary({ checkoutToken }) {
             <Popover.Button className="w-full flex items-center py-6 font-medium">
               <span className="text-base mr-auto">Total</span>
               <span className="text-base mr-2">
-                {checkoutToken.live.total_due.formatted_with_symbol}
+                {summaryData.live.total_due.formatted_with_symbol}
               </span>
               <ChevronUpIcon
                 className="w-5 h-5 text-gray-500"
@@ -107,13 +107,13 @@ export default function Summary({ checkoutToken }) {
                 <dl className="max-w-lg mx-auto space-y-6">
                   <div className="flex items-center justify-between">
                     <dt className="text-gray-600">Subtotal</dt>
-                    <dd>{checkoutToken.live.subtotal.formatted_with_symbol}</dd>
+                    <dd>{summaryData.live.subtotal.formatted_with_symbol}</dd>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <dt className="text-gray-600">Shipping</dt>
                     <dd>
-                      {checkoutToken.live.shipping.price.formatted_with_symbol}
+                      {summaryData.live.shipping.price.formatted_with_symbol}
                     </dd>
                   </div>
 

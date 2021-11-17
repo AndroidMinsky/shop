@@ -4,7 +4,12 @@ import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { commerce } from "../../lib/commerce";
 
-export default function Form({ checkoutToken, onCaptureCheckout }) {
+export default function Form({
+  checkoutToken,
+  onCaptureCheckout,
+  onSuccessfulCheckout,
+  onSummaryDataChange,
+}) {
   const {
     register,
     handleSubmit,
@@ -14,14 +19,22 @@ export default function Form({ checkoutToken, onCaptureCheckout }) {
   const stripe = useStripe();
   const elements = useElements();
 
+  const [shippingCountries, setShippingCountries] = useState([]);
+  const [shippingCountry, setShippingCountry] = useState("");
+  const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
+  const [shippingSubdivision, setShippingSubdivision] = useState("");
+  const [shippingOptions, setShippingOptions] = useState([]);
+  const [shippingOption, setShippingOption] = useState("");
+  const [isProcessing, setProcessingTo] = useState(true);
+
   const onSubmit = async (data) => {
-    // console.log(data);
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
     });
+
     if (error) {
       console.log(error);
     } else {
@@ -45,15 +58,9 @@ export default function Form({ checkoutToken, onCaptureCheckout }) {
         },
       };
       onCaptureCheckout(checkoutToken.id, orderData);
+      onSuccessfulCheckout();
     }
   };
-
-  const [shippingCountries, setShippingCountries] = useState([]);
-  const [shippingCountry, setShippingCountry] = useState("");
-  const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
-  const [shippingSubdivision, setShippingSubdivision] = useState("");
-  const [shippingOptions, setShippingOptions] = useState([]);
-  const [shippingOption, setShippingOption] = useState("");
 
   const fetchShippingCountires = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(
@@ -93,7 +100,7 @@ export default function Form({ checkoutToken, onCaptureCheckout }) {
         region: shippingSubdivision,
       }
     );
-    console.log(response);
+    onSummaryDataChange(response);
   };
 
   useEffect(() => {
@@ -531,9 +538,9 @@ export default function Form({ checkoutToken, onCaptureCheckout }) {
         <div className="mt-10 pt-6 border-t border-gray-200">
           <button
             type="submit"
-            className="w-full bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2"
+            className={`w-full bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2`}
           >
-            Submit Order
+            Pay {checkoutToken.live.subtotal.formatted_with_symbol}
           </button>
         </div>
       </div>
