@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
-import { commerce } from "./lib/commerce";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { commerce } from "./lib/commerce";
 
 import Footer from "./components/Footer/Footer";
 import Storefront from "./components/Storefront/Storefront";
 import Header from "./components/Header/Header";
 import Checkout from "./components/Checkout/Checkout";
+import Cart from "./components/Cart/Cart";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 export default function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const [openCart, setOpenCart] = useState(false);
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
@@ -61,29 +68,33 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="bg-pink-bg flex flex-col min-h-screen">
-        <Header
-          totalItems={cart.total_items}
-          cart={cart}
-          onUpdateQuantity={updateQuantityHandler}
-          onRemoveFromCart={removeFromCartHandler}
-        />
-        <Switch>
-          <Route exact path="/">
-            <Storefront products={products} onAddToCart={addToCartHandler} />
-          </Route>
-          <Route exact path="/checkout">
-            <Checkout
-              cart={cart}
-              order={order}
-              error={errorMessage}
-              onCaptureCheckout={captureCheckoutHandler}
-            />
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
-    </Router>
+    <Elements stripe={stripePromise}>
+      <Router>
+        <div className="bg-pink-bg flex flex-col min-h-screen">
+          <Header totalItems={cart.total_items} openCart={setOpenCart} />
+          <Cart
+            open={openCart}
+            setOpen={setOpenCart}
+            cart={cart}
+            onUpdateQuantity={updateQuantityHandler}
+            onRemoveFromCart={removeFromCartHandler}
+          />
+          <Switch>
+            <Route exact path="/">
+              <Storefront products={products} onAddToCart={addToCartHandler} />
+            </Route>
+            <Route exact path="/checkout">
+              <Checkout
+                cart={cart}
+                order={order}
+                error={errorMessage}
+                onCaptureCheckout={captureCheckoutHandler}
+              />
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
+      </Router>
+    </Elements>
   );
 }

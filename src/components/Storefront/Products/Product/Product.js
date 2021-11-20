@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Product({ product, onAddToCart }) {
-  console.log(product);
   return (
     <a
       key={product.id}

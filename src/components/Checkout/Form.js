@@ -25,7 +25,6 @@ export default function Form({
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
-  const [isProcessing, setProcessingTo] = useState(true);
 
   const onSubmit = async (data) => {
     if (!stripe || !elements) return;
@@ -481,58 +480,6 @@ export default function Form({
           <div className="mt-6">
             <CardElement />
           </div>
-
-          {/* <div className="mt-6">
-            <div className="flex -space-x-px">
-              <div className="relative w-5/6 flex-1 -space-x-px">
-                <input
-                  id="card"
-                  name="card"
-                  type="text"
-                  className="peer h-10 w-full rounded-l-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none "
-                  placeholder="."
-                />
-                <label
-                  htmlFor="card"
-                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-                >
-                  Card Number
-                </label>
-              </div>
-
-              <div className="relative w-1/6 inline-block -space-x-px">
-                <input
-                  id="expiry"
-                  name="expiry"
-                  type="text"
-                  className="peer h-10 w-full border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none"
-                  placeholder="."
-                />
-                <label
-                  htmlFor="expiry"
-                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-                >
-                  MM / YY
-                </label>
-              </div>
-
-              <div className="relative w-1/6 inline-block text-xl">
-                <input
-                  id="cvc"
-                  name="cvc"
-                  type="text"
-                  className="peer h-10 w-full rounded-r-md border-gray-300 shadow-sm text-gray-900 placeholder-transparent focus:outline-none"
-                  placeholder="."
-                />
-                <label
-                  htmlFor="cvc"
-                  className="absolute left-2 -top-2 text-gray-600 text-sm bg-white px-1 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm cursor-text"
-                >
-                  CVC
-                </label>
-              </div>
-            </div>
-          </div> */}
         </section>
 
         <div className="mt-10 pt-6 border-t border-gray-200">

@@ -1,12 +1,10 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BiShoppingBag } from "react-icons/bi";
-import Cart from "../Cart/Cart";
+
 import "./Header.css";
 
-export default function Header(props) {
+export default function Header({ totalItems, openCart }) {
   const location = useLocation();
-  const [openCart, setOpenCart] = useState(false);
 
   return (
     <>
@@ -28,14 +26,14 @@ export default function Header(props) {
                 <div className="flow-root lg:ml-1 flex self-end">
                   <div
                     className="p-2 flex items-center cursor-pointer"
-                    onClick={() => setOpenCart(true)}
+                    onClick={() => openCart(true)}
                   >
                     <BiShoppingBag
                       className="flex-shrink-0 h-7 w-7 text-black group-hover:text-gray-300"
                       aria-hidden="true"
                     />
                     <span className="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xl font-bold leading-none text-white bg-pink-dark rounded">
-                      {props.totalItems}
+                      {totalItems}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </div>
@@ -66,13 +64,6 @@ export default function Header(props) {
           </header>
         </div>
       </div>
-      <Cart
-        open={openCart}
-        setOpen={setOpenCart}
-        cart={props.cart}
-        onUpdateQuantity={props.onUpdateQuantity}
-        onRemoveFromCart={props.onRemoveFromCart}
-      />
     </>
   );
 }

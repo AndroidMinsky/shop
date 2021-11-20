@@ -55,7 +55,7 @@ export default function Cart({
               </p>
             </div>
 
-            <div className="mt-4 flex-1 flex items-end justify-between">
+            <div className="mt-4 flex-1 flex items-center justify-between">
               <div className="flex items-center text-sm text-gray-700 space-x-3 border rounded-md p-2">
                 <button
                   onClick={(e) =>
@@ -102,7 +102,7 @@ export default function Cart({
               <div className="ml-4">
                 <button
                   type="button"
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  className="text-sm font-medium text-pink-dark hover:text-pink-light "
                   onClick={() => onRemoveFromCart(item.id)}
                 >
                   <span>Remove</span>
@@ -200,7 +200,7 @@ export default function Cart({
                           </div>
                         </dl>
                         <p className="mt-1 text-sm text-gray-500">
-                          Shipping and taxes will be calculated at checkout.
+                          Shipping will be calculated at checkout.
                         </p>
                       </div>
 
@@ -222,7 +222,7 @@ export default function Cart({
                           or{" "}
                           <a
                             href="#"
-                            className="text-indigo-600 font-medium hover:text-indigo-500"
+                            className="text-dark font-medium hover:text-light"
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>
