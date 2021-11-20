@@ -3,6 +3,7 @@ import { commerce } from "../../lib/commerce";
 import Confirmation from "./Confirmation";
 import Form from "./Form";
 import Summary from "./Summary";
+import PuffLoader from "react-spinners/ClipLoader";
 
 export default function Checkout({ cart, order, error, onCaptureCheckout }) {
   const [checkoutToken, setCheckoutToken] = useState(null);
@@ -31,13 +32,12 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
 
   const loading = (
     <div>
-      <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>
-      Loading...
+      <div className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
     </div>
   );
 
   return (
-    <main className="-mt-32 pb-8">
+    <main className="-mt-32 pb-8 flex-grow">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="sr-only">Page title</h1>
         {/* Main 3 column grid */}
@@ -74,7 +74,11 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  {summaryData && <Summary summaryData={summaryData} />}
+                  {summaryData ? (
+                    <Summary summaryData={summaryData} />
+                  ) : (
+                    loading
+                  )}
                 </div>
               </div>
             </section>

@@ -40,7 +40,7 @@ export default function Summary({ summaryData }) {
         ))}
       </ul>
 
-      <dl className="hidden text-sm font-medium text-gray-900 space-y-6 border-t border-gray-200 pt-6 lg:block">
+      <dl className=" text-sm font-medium text-gray-900 space-y-6 border-t border-gray-200 pt-6 lg:block">
         <div className="flex items-center justify-between">
           <dt className="text-gray-600">Subtotal</dt>
           <dd>{summaryData.live.subtotal.formatted_with_symbol}</dd>
@@ -51,11 +51,6 @@ export default function Summary({ summaryData }) {
           <dd>{summaryData.live.shipping.price.formatted_with_symbol}</dd>
         </div>
 
-        {/* <div className="flex items-center justify-between">
-          <dt className="text-gray-600">Taxes</dt>
-          <dd>$26.80</dd>
-        </div> */}
-
         <div className="flex items-center justify-between border-t border-gray-200 pt-6">
           <dt className="text-base">Total</dt>
           <dd className="text-base">
@@ -64,7 +59,7 @@ export default function Summary({ summaryData }) {
         </div>
       </dl>
 
-      <Popover className="fixed bottom-0 inset-x-0 flex flex-col-reverse text-sm font-medium text-gray-900 lg:hidden">
+      {/* <Popover className="fixed bottom-0 inset-x-0 flex flex-col-reverse text-sm font-medium text-gray-900 lg:hidden">
         <div className="relative z-10 bg-white border-t border-gray-200 px-4 sm:px-6">
           <div className="max-w-lg mx-auto">
             <Popover.Button className="w-full flex items-center py-6 font-medium">
@@ -116,17 +111,12 @@ export default function Summary({ summaryData }) {
                       {summaryData.live.shipping.price.formatted_with_symbol}
                     </dd>
                   </div>
-
-                  {/* <div className="flex items-center justify-between">
-                    <dt className="text-gray-600">Taxes</dt>
-                    <dd>$26.80</dd>
-                  </div> */}
                 </dl>
               </Popover.Panel>
             </Transition.Child>
           </div>
         </Transition.Root>
-      </Popover>
+      </Popover> */}
     </div>
   );
 }

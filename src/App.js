@@ -62,7 +62,7 @@ export default function App() {
 
   return (
     <Router>
-      <div className="bg-pink-bg">
+      <div className="bg-pink-bg flex flex-col min-h-screen">
         <Header
           totalItems={cart.total_items}
           cart={cart}

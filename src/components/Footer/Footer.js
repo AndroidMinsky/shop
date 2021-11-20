@@ -58,8 +58,13 @@ export default function Footer() {
           ))}
         </div>
         <div className="mt-8 md:mt-0 md:order-1">
-          <p className="text-center text-base text-white">
-            &copy; {new Date().getFullYear()} Croi Beauty. All rights reserved.
+          <p className="text-center text-base text-white md:flex md:items-center">
+            &copy; {new Date().getFullYear()} Croi Beauty. Made with {}
+            <img
+              className="ml-1 h-5"
+              src={`${process.env.PUBLIC_URL}/croi.png`}
+              alt="Logo"
+            />
           </p>
         </div>
       </div>
