@@ -10,7 +10,7 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    // cursor: { text: "text", pointer: "pointer" },
+    // cursor: { text: "text", pointer: "pointer", "not-allowed": "not-allowed" },
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
@@ -25,7 +25,10 @@ module.exports = {
     },
   },
   variants: {
-    extend: { opacity: ["disabled"] },
+    extend: {
+      opacity: ["disabled"],
+      backgroundColor: ["disabled"],
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),

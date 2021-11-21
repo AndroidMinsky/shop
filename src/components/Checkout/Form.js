@@ -7,8 +7,7 @@ import { commerce } from "../../lib/commerce";
 export default function Form({
   checkoutToken,
   onCaptureCheckout,
-  onSuccessfulCheckout,
-  onSummaryDataChange,
+  setLiveObject,
 }) {
   const {
     register,
@@ -25,10 +24,14 @@ export default function Form({
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
+  const [isProcessing, setProcessingTo] = useState(false);
 
   const onSubmit = async (data) => {
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);
+
+    setProcessingTo(true);
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
@@ -36,6 +39,7 @@ export default function Form({
 
     if (error) {
       console.log(error);
+      setProcessingTo(false);
     } else {
       const orderData = {
         line_items: checkoutToken.live.line_items,
@@ -57,14 +61,14 @@ export default function Form({
         },
       };
       onCaptureCheckout(checkoutToken.id, orderData);
-      onSuccessfulCheckout();
     }
   };
 
-  const fetchShippingCountires = async (checkoutTokenId) => {
+  const fetchShippingCountries = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(
       checkoutTokenId
     );
+
     setShippingCountries(countries);
     setShippingCountry(Object.keys(countries)[0]);
   };
@@ -90,38 +94,36 @@ export default function Form({
     setShippingOption(options[0].id);
   };
 
-  const checkShippingOption = async (checkoutTokenId, shippingOption) => {
-    const response = await commerce.checkout.checkShippingOption(
+  const checkShippingOption = async (checkoutTokenId, shippingOptionId) => {
+    const { live } = await commerce.checkout.checkShippingOption(
       checkoutTokenId,
       {
-        shipping_option_id: shippingOption,
+        shipping_option_id: shippingOptionId,
         country: shippingCountry,
         region: shippingSubdivision,
       }
     );
-    onSummaryDataChange(response);
+    setLiveObject(live);
   };
 
   useEffect(() => {
-    fetchShippingCountires(checkoutToken.id);
-  }, [checkoutToken.id]);
+    fetchShippingCountries(checkoutToken.id);
+  }, [checkoutToken]);
 
   useEffect(() => {
-    if (shippingCountry) fetchSubdivisions(shippingCountry);
-  }, [shippingCountry]);
-
-  useEffect(() => {
-    if (shippingSubdivision)
+    if (shippingCountry) {
+      fetchSubdivisions(shippingCountry);
       fetchShippingOptions(
         checkoutToken.id,
         shippingCountry,
         shippingSubdivision
       );
-  }, [shippingSubdivision]);
+    }
+  }, [shippingCountry, checkoutToken.id, shippingSubdivision]);
 
   useEffect(() => {
     if (shippingOption) checkShippingOption(checkoutToken.id, shippingOption);
-  }, [shippingOption]);
+  }, [checkoutToken, shippingOption]);
 
   const countries = Object.entries(shippingCountries).map(([code, name]) => ({
     id: code,
@@ -484,10 +486,11 @@ export default function Form({
 
         <div className="mt-10 pt-6 border-t border-gray-200">
           <button
+            disabled={isProcessing}
             type="submit"
-            className={`w-full bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2`}
+            className="w-full bg-dark hover:bg-light text-white font-bold py-2 px-4 rounded text-xl mr-2 disabled:opacity-50 dissabled:cursor-not-allowed dissabled:hover:bg-dark"
           >
-            Pay {checkoutToken.live.subtotal.formatted_with_symbol}
+            {isProcessing ? "Processing..." : "Submit Order"}
           </button>
         </div>
       </div>

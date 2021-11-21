@@ -40,7 +40,7 @@ export default function Cart({
               <div className="flex justify-between">
                 <h4 className="text-sm">
                   <a
-                    href="#"
+                    href="/#"
                     className="font-medium text-gray-700 hover:text-gray-800"
                   >
                     {item.name}
@@ -209,7 +209,7 @@ export default function Cart({
                           <button
                             disabled={!cart.line_items.length}
                             type="submit"
-                            className="w-full bg-dark border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50"
+                            className="w-full bg-dark hover:bg-light border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-dark"
                             onClick={() => setOpen(false)}
                           >
                             Checkout
@@ -221,7 +221,7 @@ export default function Cart({
                         <p>
                           or{" "}
                           <a
-                            href="#"
+                            href="/"
                             className="text-dark font-medium hover:text-light"
                           >
                             Continue Shopping

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Summary({ summaryData }) {
+export default function Summary({ liveObject }) {
   return (
     <div className="max-w-lg mx-auto lg:max-w-none">
       <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
@@ -8,7 +8,7 @@ export default function Summary({ summaryData }) {
       </h2>
 
       <ul className="text-sm font-medium text-gray-900 divide-y divide-gray-200">
-        {summaryData.live.line_items.map((item) => (
+        {liveObject.line_items.map((item) => (
           <li key={item.id} className="flex items-start py-6 space-x-4">
             <img
               src={item.image.url}
@@ -41,18 +41,18 @@ export default function Summary({ summaryData }) {
       <dl className=" text-sm font-medium text-gray-900 space-y-6 border-t border-gray-200 pt-6 lg:block">
         <div className="flex items-center justify-between">
           <dt className="text-gray-600">Subtotal</dt>
-          <dd>{summaryData.live.subtotal.formatted_with_symbol}</dd>
+          <dd>{liveObject.subtotal.formatted_with_symbol}</dd>
         </div>
 
         <div className="flex items-center justify-between">
           <dt className="text-gray-600">Shipping</dt>
-          <dd>{summaryData.live.shipping.price.formatted_with_symbol}</dd>
+          <dd>{liveObject.shipping.price.formatted_with_symbol}</dd>
         </div>
 
         <div className="flex items-center justify-between border-t border-gray-200 pt-6">
           <dt className="text-base">Total</dt>
           <dd className="text-base">
-            {summaryData.live.total_due.formatted_with_symbol}
+            {liveObject.total_due.formatted_with_symbol}
           </dd>
         </div>
       </dl>

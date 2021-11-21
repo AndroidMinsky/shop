@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { commerce } from "../../lib/commerce";
-import Confirmation from "./Confirmation";
+
 import Form from "./Form";
 import Summary from "./Summary";
-import PuffLoader from "react-spinners/ClipLoader";
 
 export default function Checkout({ cart, order, error, onCaptureCheckout }) {
   const [checkoutToken, setCheckoutToken] = useState(null);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [summaryData, setSummaryData] = useState(null);
+  const [liveObject, setLiveObject] = useState(null);
 
   useEffect(() => {
     const generateToken = async () => {
@@ -22,17 +20,12 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
     generateToken();
   }, [cart]);
 
-  const summaryDataHandler = (data) => {
-    setSummaryData(data);
-  };
-
-  const successfulCheckoutHandler = () => {
-    setShowConfirmation(true);
-  };
-
   const loading = (
-    <div>
-      <div className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"></div>
+    <div className="flex justify-center">
+      <div
+        style={{ borderTopColor: "transparent" }}
+        className="w-10 h-10 border-4 border-light border-solid rounded-full animate-spin"
+      ></div>
     </div>
   );
 
@@ -50,17 +43,15 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  {checkoutToken && !showConfirmation ? (
+                  {checkoutToken ? (
                     <Form
                       checkoutToken={checkoutToken}
                       onCaptureCheckout={onCaptureCheckout}
-                      onSuccessfulCheckout={successfulCheckoutHandler}
-                      onSummaryDataChange={summaryDataHandler}
+                      setLiveObject={setLiveObject}
                     />
                   ) : (
                     loading
                   )}
-                  {showConfirmation && <Confirmation />}
                 </div>
               </div>
             </section>
@@ -74,11 +65,7 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
               </h2>
               <div className="rounded-lg bg-white overflow-hidden shadow">
                 <div className="p-6">
-                  {summaryData ? (
-                    <Summary summaryData={summaryData} />
-                  ) : (
-                    loading
-                  )}
+                  {liveObject ? <Summary liveObject={liveObject} /> : loading}
                 </div>
               </div>
             </section>

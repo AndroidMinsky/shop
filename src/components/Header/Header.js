@@ -33,7 +33,7 @@ export default function Header({ totalItems, openCart }) {
                       aria-hidden="true"
                     />
                     <span className="ml-2 inline-flex items-center justify-center px-2 py-1 mr-2 text-xl font-bold leading-none text-white bg-pink-dark rounded">
-                      {totalItems}
+                      {totalItems ? totalItems : 0}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </div>
@@ -44,10 +44,13 @@ export default function Header({ totalItems, openCart }) {
           <header className="pb-6 pt-2">
             {location.pathname === "/" ? (
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <button className="bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2">
+                <button className="bg-dark hover:bg-pink-light text-white font-bold py-2 px-4 rounded text-xl mr-2">
                   All Products
                 </button>
-                <button className="bg-light hover:bg-pink-dark text-white font-bold py-2 px-4 rounded text-xl mr-2">
+                <button
+                  disabled={true}
+                  className="bg-dark hover:bg-light text-white font-bold py-2 px-4 rounded text-xl mr-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-dark"
+                >
                   Skincare
                 </button>
               </div>
