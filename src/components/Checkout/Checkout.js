@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { commerce } from "../../lib/commerce";
 
 import Form from "./Form";
 import Summary from "./Summary";
 
-export default function Checkout({ cart, order, error, onCaptureCheckout }) {
+export default function Checkout({ cart, onCaptureCheckout }) {
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [liveObject, setLiveObject] = useState(null);
+
+  let history = useHistory();
 
   useEffect(() => {
     const generateToken = async () => {
@@ -15,9 +18,15 @@ export default function Checkout({ cart, order, error, onCaptureCheckout }) {
           type: "cart",
         });
         setCheckoutToken(token);
-      } catch (error) {}
+      } catch (error) {
+        history.push("/");
+        console.log(error);
+      }
     };
-    generateToken();
+
+    const timer = setTimeout(() => generateToken(), 1000);
+
+    return () => clearTimeout(timer);
   }, [cart]);
 
   const loading = (

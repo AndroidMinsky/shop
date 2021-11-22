@@ -90,16 +90,12 @@ export default function App() {
             <Storefront products={products} onAddToCart={addToCartHandler} />
           </Route>
           <Route exact path="/checkout">
-            {Object.keys(cart).length !== 0 ? (
-              <Checkout
-                cart={cart}
-                order={order}
-                error={errorMessage}
-                onCaptureCheckout={captureCheckoutHandler}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
+            <Checkout
+              cart={cart}
+              order={order}
+              error={errorMessage}
+              onCaptureCheckout={captureCheckoutHandler}
+            />
           </Route>
           <Route exact path="/confirmation">
             {order ? <Confirmation order={order} /> : <Redirect to="/" />}

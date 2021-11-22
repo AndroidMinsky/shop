@@ -424,7 +424,7 @@ export default function Form({
             id="payment-heading"
             className="text-lg font-medium text-gray-900"
           >
-            Shipping Method
+            Shipping method
           </h2>
           <div className="mt-6">
             <div>
