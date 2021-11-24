@@ -58,7 +58,7 @@ export default function Header({ totalItems, openCart }) {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Link
                   to="/"
-                  className="bg-dark hover:bg-pink text-white font-bold py-2 px-4 rounded text-xl mr-2"
+                  className="bg-dark hover:bg-light text-white font-bold py-2 px-4 rounded text-xl mr-2"
                 >
                   &larr; Continue Shopping
                 </Link>

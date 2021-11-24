@@ -92,7 +92,6 @@ export default function App() {
           <Route exact path="/checkout">
             <Checkout
               cart={cart}
-              order={order}
               error={errorMessage}
               onCaptureCheckout={captureCheckoutHandler}
             />

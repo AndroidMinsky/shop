@@ -39,12 +39,9 @@ export default function Cart({
             <div>
               <div className="flex justify-between">
                 <h4 className="text-sm">
-                  <a
-                    href="/#"
-                    className="font-medium text-gray-700 hover:text-gray-800"
-                  >
+                  <p className="font-medium text-gray-700 hover:text-gray-800">
                     {item.name}
-                  </a>
+                  </p>
                 </h4>
                 <p className="ml-4 text-sm font-medium text-gray-900">
                   {item.line_total.formatted_with_symbol}
