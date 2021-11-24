@@ -25,6 +25,7 @@ export default function Form({
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
   const [isProcessing, setProcessingTo] = useState(false);
+  const [stripeError, setStripeError] = useState(null);
 
   const onSubmit = async (data) => {
     if (!stripe || !elements) return;
@@ -38,7 +39,7 @@ export default function Form({
     });
 
     if (error) {
-      console.log(error);
+      setStripeError(error.message);
       setProcessingTo(false);
     } else {
       const orderData = {
@@ -481,6 +482,17 @@ export default function Form({
           </h2>
           <div className="mt-6">
             <CardElement />
+            {stripeError && (
+              <div className="flex items-center mt-4">
+                <ExclamationCircleIcon
+                  className="h-5 w-5 text-red-500 mr-1"
+                  aria-hidden="true"
+                />
+                <p className="text-sm text-red-600" id="shipping-error">
+                  {stripeError}
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
