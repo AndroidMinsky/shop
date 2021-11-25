@@ -8,6 +8,8 @@ export default function Form({
   checkoutToken,
   onCaptureCheckout,
   setLiveObject,
+  isProcessing,
+  setProcessingTo,
 }) {
   const {
     register,
@@ -24,7 +26,6 @@ export default function Form({
   const [shippingSubdivision, setShippingSubdivision] = useState("");
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState("");
-  const [isProcessing, setProcessingTo] = useState(false);
   const [stripeError, setStripeError] = useState(null);
 
   const onSubmit = async (data) => {

@@ -5,7 +5,12 @@ import { commerce } from "../../lib/commerce";
 import Form from "./Form";
 import Summary from "./Summary";
 
-export default function Checkout({ cart, onCaptureCheckout }) {
+export default function Checkout({
+  cart,
+  onCaptureCheckout,
+  isProcessing,
+  setProcessingTo,
+}) {
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [liveObject, setLiveObject] = useState(null);
 
@@ -57,6 +62,8 @@ export default function Checkout({ cart, onCaptureCheckout }) {
                       checkoutToken={checkoutToken}
                       onCaptureCheckout={onCaptureCheckout}
                       setLiveObject={setLiveObject}
+                      isProcessing={isProcessing}
+                      setProcessingTo={setProcessingTo}
                     />
                   ) : (
                     loading
