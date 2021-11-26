@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { commerce } from "./lib/commerce";
+import toast, { Toaster } from "react-hot-toast";
 
 import Footer from "./components/Footer/Footer";
 import Storefront from "./components/Storefront/Storefront";
@@ -11,16 +12,44 @@ import Confirmation from "./components/Checkout/Confirmation";
 
 import { useStripe } from "@stripe/react-stripe-js";
 
+import { XCircleIcon, XIcon } from "@heroicons/react/solid";
+
 export default function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
   const [order, setOrder] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
   const [openCart, setOpenCart] = useState(false);
   const [isProcessing, setProcessingTo] = useState(false);
 
   let history = useHistory();
   const stripe = useStripe();
+
+  const errorMessage = (message) => {
+    return (
+      <div className="rounded-md bg-red-50 p-4">
+        <div className="flex">
+          <div className="flex-shrink-0">
+            <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+          </div>
+          <div className="ml-3">
+            <p className="text-sm font-medium text-red-800">{message}</p>
+          </div>
+          <div className="ml-auto pl-3">
+            <div className="-mx-1.5 -my-1.5">
+              <button
+                type="button"
+                className="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600"
+                onClick={() => toast.remove()}
+              >
+                <span className="sr-only">Dismiss</span>
+                <XIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
@@ -67,7 +96,7 @@ export default function App() {
         response.statusCode !== 402 ||
         response.data.error.type !== "requires_verification"
       ) {
-        console.log(response.data.error.message);
+        toast.custom(errorMessage(response.data.error.message));
         setProcessingTo(false);
       }
       const cardActionResult = await stripe.handleCardAction(
@@ -75,7 +104,7 @@ export default function App() {
       );
       if (cardActionResult.error) {
         // The customer failed to authenticate themselves with their bank and the transaction has been declined
-        console.log(cardActionResult.error.message);
+        toast.custom(errorMessage(cardActionResult.error.message));
         setProcessingTo(false);
         return;
       }
@@ -97,7 +126,7 @@ export default function App() {
         return;
       } catch (response) {
         // We get here if the order failed to capture with Commrece.js
-        console.log(response.data.error.message);
+        toast.custom(errorMessage(response.data.error.message));
         setProcessingTo(false);
       }
     }
@@ -110,6 +139,11 @@ export default function App() {
 
   return (
     <div className="bg-pink-bg flex flex-col min-h-screen">
+      <Toaster
+        toastOptions={{
+          duration: 5000,
+        }}
+      />
       <Header totalItems={cart.total_items} openCart={setOpenCart} />
       <Cart
         open={openCart}
@@ -125,7 +159,6 @@ export default function App() {
         <Route exact path="/checkout">
           <Checkout
             cart={cart}
-            error={errorMessage}
             onCaptureCheckout={captureCheckoutHandler}
             isProcessing={isProcessing}
             setProcessingTo={setProcessingTo}
