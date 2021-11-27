@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Cart({
   open,
@@ -124,6 +125,9 @@ export default function Cart({
         onClose={setOpen}
       >
         <div className="absolute inset-0 overflow-hidden">
+          <Helmet>
+            <title>Cart</title>
+          </Helmet>
           <Transition.Child
             as={Fragment}
             enter="ease-in-out duration-500"

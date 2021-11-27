@@ -1,4 +1,6 @@
 import "./Footer.css";
+import { useLocation } from "react-router-dom";
+
 const navigation = [
   {
     name: "Facebook",
@@ -29,9 +31,14 @@ const navigation = [
 ];
 
 export default function Footer() {
+  const location = useLocation();
   return (
     <footer className="footer-background">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+      <div
+        className={`mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8 ${
+          location.pathname === "/" ? "max-w-7xl" : "max-w-3xl lg:max-w-7xl"
+        }`}
+      >
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (
             <a
@@ -46,12 +53,12 @@ export default function Footer() {
             </a>
           ))}
         </div>
-        <div className="mt-8 md:mt-0 md:order-1 flex justify-center">
-          <p className="text-center text-base text-white md:items-center">
+        <div className="mt-8 md:mt-0 md:order-1 flex justify-center items-center">
+          <p className="text-center text-base text-white">
             &copy; {new Date().getFullYear()} Croi Beauty. Made with {}
           </p>
           <img
-            className="ml-1 h-5"
+            className="ml-1 h-4"
             src={`${process.env.PUBLIC_URL}/croi.png`}
             alt="Logo"
           />

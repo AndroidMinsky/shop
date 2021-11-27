@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import { Helmet } from "react-helmet";
 
 export default function ProductModal({ open, setOpen, product }) {
   return (
@@ -10,6 +11,9 @@ export default function ProductModal({ open, setOpen, product }) {
         className="fixed z-10 inset-0 overflow-y-auto"
         onClose={setOpen}
       >
+        <Helmet>
+          <title>{product.name}</title>
+        </Helmet>
         <div
           className="flex min-h-screen text-center md:block md:px-2 lg:px-4 rounded-lg"
           style={{ fontSize: 0 }}

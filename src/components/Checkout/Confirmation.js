@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 export default function Confirmation() {
   return (
     <main className="-mt-32 pb-8 flex-grow">
+      <Helmet>
+        <title>Confirmation</title>
+      </Helmet>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="sr-only">Page title</h1>
         {/* Main 3 column grid */}
