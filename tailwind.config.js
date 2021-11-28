@@ -10,6 +10,10 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      xs: "490px",
+      ...defaultTheme.screens,
+    },
     // cursor: { text: "text", pointer: "pointer", "not-allowed": "not-allowed" },
     extend: {
       fontFamily: {
@@ -17,7 +21,7 @@ module.exports = {
       },
       colors: {
         orange: colors.orange,
-        green: "#c5c7b1",
+        // green: "#c5c7b1",
         pink: { dark: "#f36f57", light: "#f69a88", bg: "#f6f3f2" },
         dark: "#606155",
         light: "#9c9d8b",

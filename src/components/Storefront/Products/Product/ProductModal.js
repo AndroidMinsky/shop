@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { Helmet } from "react-helmet";
 
-export default function ProductModal({ open, setOpen, product }) {
+export default function ProductModal({ open, setOpen, product, addToCart }) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -89,6 +89,7 @@ export default function ProductModal({ open, setOpen, product }) {
                       </div>
 
                       <button
+                        onClick={() => addToCart(product.id)}
                         type="submit"
                         className="mt-8 w-full bg-dark border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >

@@ -28,6 +28,8 @@ export default function Form({
   const [shippingOption, setShippingOption] = useState("");
   const [stripeError, setStripeError] = useState(null);
 
+  console.log(shippingSubdivision);
+
   const onSubmit = async (data) => {
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);

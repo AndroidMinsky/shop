@@ -141,8 +141,9 @@ export default function App() {
     <div className="bg-pink-bg flex flex-col min-h-screen">
       <Toaster
         toastOptions={{
-          duration: 5000,
+          duration: 4000,
         }}
+        position="bottom-center"
       />
       <Header totalItems={cart.total_items} openCart={setOpenCart} />
       <Cart

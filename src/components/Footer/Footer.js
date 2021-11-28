@@ -59,7 +59,7 @@ export default function Footer() {
           </p>
           <img
             className="ml-1 h-4"
-            src={`${process.env.PUBLIC_URL}/croi.png`}
+            src={`${process.env.PUBLIC_URL}/croi-white.png`}
             alt="Logo"
           />
         </div>
