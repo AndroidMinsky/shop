@@ -117,13 +117,9 @@ export default function Form({
   useEffect(() => {
     if (shippingCountry) {
       fetchSubdivisions(shippingCountry);
-      fetchShippingOptions(
-        checkoutToken.id,
-        shippingCountry,
-        shippingSubdivision
-      );
+      fetchShippingOptions(checkoutToken.id, shippingCountry);
     }
-  }, [shippingCountry, checkoutToken.id, shippingSubdivision]);
+  }, [shippingCountry, checkoutToken.id]);
 
   useEffect(() => {
     if (shippingOption) checkShippingOption(checkoutToken.id, shippingOption);
