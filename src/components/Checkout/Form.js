@@ -28,8 +28,6 @@ export default function Form({
   const [shippingOption, setShippingOption] = useState("");
   const [stripeError, setStripeError] = useState(null);
 
-  console.log(shippingSubdivision);
-
   const onSubmit = async (data) => {
     if (!stripe || !elements) return;
     const cardElement = elements.getElement(CardElement);
@@ -56,7 +54,7 @@ export default function Form({
           postal_zip_code: data.postal,
           country: data.country,
         },
-        fulfillment: { shipping_method: data.shipping },
+        fulfillment: { shipping_method: shippingOption },
         payment: {
           gateway: "stripe",
           stripe: {
@@ -98,7 +96,11 @@ export default function Form({
     setShippingOption(options[0].id);
   };
 
-  const checkShippingOption = async (checkoutTokenId, shippingOptionId) => {
+  const checkShippingOption = async (
+    checkoutTokenId,
+    shippingOptionId,
+    shippingSubdivision = "CO"
+  ) => {
     const { live } = await commerce.checkout.checkShippingOption(
       checkoutTokenId,
       {
@@ -438,13 +440,13 @@ export default function Form({
                   name="shipping"
                   type="text"
                   className={`peer h-10 w-full rounded-md ${
-                    errors.county ? "border-red-300" : "border-gray-300"
+                    errors.shipping ? "border-red-300" : "border-gray-300"
                   } shadow-sm text-gray-900 placeholder-transparent outline-none focus:outline-white`}
                   placeholder="."
                   onChange={(e) => setShippingOption(e.target.value)}
                 >
                   {shippingOptions.map((option) => (
-                    <option key={option.id} value={option.description}>
+                    <option key={option.id} value={option.id}>
                       {option.description} -{" "}
                       {option.price.formatted_with_symbol}
                     </option>
