@@ -221,13 +221,15 @@ export default function Cart({
                       <div className="mt-6 text-sm text-center">
                         <p>
                           or{" "}
-                          <a
-                            href="/"
-                            className="text-dark font-medium hover:text-light"
-                          >
-                            Continue Shopping
-                            <span aria-hidden="true"> &rarr;</span>
-                          </a>
+                          <Link to="/">
+                            <p
+                              className="text-dark font-medium hover:text-light inline-block"
+                              onClick={() => setOpen(false)}
+                            >
+                              Continue Shopping
+                              <span aria-hidden="true"> &rarr;</span>
+                            </p>
+                          </Link>
                         </p>
                       </div>
                     </section>

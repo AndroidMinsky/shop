@@ -2,7 +2,6 @@ import React from "react";
 import { Helmet } from "react-helmet";
 
 export default function Confirmation({ order }) {
-  console.log(order);
   return (
     <main className="-mt-32 pb-8 flex-grow">
       <Helmet>
